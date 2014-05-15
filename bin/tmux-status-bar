@@ -33,9 +33,9 @@ show_help() {
   echo "github.com/justincampbell/tmux-status-bar"
   echo ""
   echo "  Options:"
-  echo "    -q  Quiet:   do not output anything normal (must be first argument)"
-  echo "    -n  Network: a signal bar icon, or a red X"
-  echo "    -p  Power:   a plug or battery, with the time remaining"
+  echo "    -q  quiet:   do not output anything normal (must be first argument)"
+  echo "    -n  network: a signal bar icon, or a red x"
+  echo "    -p  power:   a plug or battery, with the time remaining"
 }
 
 args=""
