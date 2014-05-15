@@ -4,7 +4,9 @@ power() {
   remaining=`pmset -g batt | grep "discharging" | cut -f 4 -d " "`
 
   if [[ $remaining == "" ]]; then
-    echo -n " 🔌 "
+    if [[ $quiet -eq 0 ]]; then
+      echo -n " 🔌 "
+    fi
   else
     if [[ $remaining == "(no" ]]; then remaining="?:??"; fi
 
@@ -18,7 +20,9 @@ power() {
 
 network() {
   if scutil -r 8.8.8.8 | grep "^Reachable$" > /dev/null; then
-    echo -n " 📶 "
+    if [[ $quiet -eq 0 ]]; then
+      echo -n " 📶 "
+    fi
   else
     echo -n " ❌ "
   fi
@@ -29,13 +33,15 @@ show_help() {
   echo "github.com/justincampbell/tmux-status-bar"
   echo ""
   echo "  Options:"
+  echo "    -q  Quiet:   do not output anything normal (must be first argument)"
   echo "    -n  Network: a signal bar icon, or a red X"
   echo "    -p  Power:   a plug or battery, with the time remaining"
 }
 
 args=""
+quiet=0
 
-while getopts "hnp" opt; do
+while getopts "hnpq" opt; do
   args="$args"$opt
 
   case "$opt" in
@@ -48,6 +54,9 @@ while getopts "hnp" opt; do
       ;;
     p)
       power
+      ;;
+    q)
+      quiet=1
       ;;
   esac
 done

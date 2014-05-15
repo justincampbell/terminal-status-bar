@@ -4,13 +4,29 @@ load test_helper
   stub "pmset"
   run $tmux_status_bar -p
 
-  echo $output | grep " 🔌 "
+  [ $output = " 🔌 " ]
+  [ $status -eq 0 ]
+}
+
+@test "power is quiet when plugged-in" {
+  stub "pmset"
+  run $tmux_status_bar -q -p
+
+  [ -z $output ]
   [ $status -eq 0 ]
 }
 
 @test "power displays a battery and time remaining while discharging" {
   stub "pmset" "echo '-InternalBattery-0 99%; discharging; 9:41 remaining'"
   run $tmux_status_bar -p
+
+  [ $output = " ~9:41 🔋 " ]
+  [ $status -eq 0 ]
+}
+
+@test "power is not quiet while discharging" {
+  stub "pmset" "echo '-InternalBattery-0 99%; discharging; 9:41 remaining'"
+  run $tmux_status_bar -q -p
 
   [ $output = " ~9:41 🔋 " ]
   [ $status -eq 0 ]
@@ -28,6 +44,6 @@ load test_helper
   stub "pmset" "echo '-InternalBattery-0 20%; discharging; 0:59 remaining'"
   run $tmux_status_bar -p
 
-  echo $output | grep " ~0:59 ❗️🔋 "
+  [ $output = " ~0:59 ❗️🔋 " ]
   [ $status -eq 0 ]
 }

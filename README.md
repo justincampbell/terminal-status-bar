@@ -22,6 +22,8 @@
      📶
      $ tmux-status-bar -pn
      ~3:31 🔋  📶
+     $ tmux-status-bar -q -pn
+     ~3:31 🔋
 
 Put your desired command in your tmux `status-right`:
 
