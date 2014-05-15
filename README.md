@@ -1,4 +1,6 @@
-# tmux-status-bar [![Build Status](https://travis-ci.org/justincampbell/tmux-status-bar.svg?branch=master)](https://travis-ci.org/justincampbell/tmux-status-bar)
+![tmux-status-bar](https://s3.amazonaws.com/justincampbell/tmux-status-bar.png)
+
+[![Build Status](https://travis-ci.org/justincampbell/tmux-status-bar.svg?branch=master)](https://travis-ci.org/justincampbell/tmux-status-bar)
 
 # Installation
 
