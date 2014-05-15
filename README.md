@@ -16,4 +16,14 @@
 
 # Usage
 
-<!-- # TODO -->
+     $ tmux-status-bar -p
+     ~3:31 🔋
+     $ tmux-status-bar -n
+     📶
+     $ tmux-status-bar -pn
+     ~3:31 🔋  📶
+
+Put your desired command in your tmux `status-right`:
+
+    # ~/.tmux.conf
+    set -g status-right '#(tmux-status-bar -pn)'
