@@ -1,7 +1,7 @@
 HOMEPAGE=https://github.com/justincampbell/tmux-status-bar
 PREFIX=/usr/local
 
-VERSION=0.1.0
+VERSION=0.2.0
 TAG=v$(VERSION)
 
 ARCHIVE=tmux-status-bar-$(TAG).tar.gz
