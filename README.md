@@ -14,6 +14,12 @@
     cd tmux-status-bar-latest/
     make install
 
+# Options
+
+    -q  quiet:   do not output anything normal (must be first argument)
+    -n  network: a signal bar icon, or a red x
+    -p  power:   a plug or battery, with the time remaining
+
 # Usage
 
      $ tmux-status-bar -p
