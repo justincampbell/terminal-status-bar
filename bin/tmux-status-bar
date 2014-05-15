@@ -1,5 +1,15 @@
 #!/bin/bash
 
+network() {
+  if scutil -r 8.8.8.8 | grep "^Reachable$" > /dev/null; then
+    if [[ $quiet -eq 0 ]]; then
+      echo -n " 📶 "
+    fi
+  else
+    echo -n " ❌ "
+  fi
+}
+
 power() {
   remaining=`pmset -g batt | grep "discharging" | cut -f 4 -d " "`
 
@@ -15,16 +25,6 @@ power() {
     else
       echo -n " ~$remaining 🔋 "
     fi
-  fi
-}
-
-network() {
-  if scutil -r 8.8.8.8 | grep "^Reachable$" > /dev/null; then
-    if [[ $quiet -eq 0 ]]; then
-      echo -n " 📶 "
-    fi
-  else
-    echo -n " ❌ "
   fi
 }
 
