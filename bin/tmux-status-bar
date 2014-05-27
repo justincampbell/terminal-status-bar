@@ -6,7 +6,7 @@ network() {
       echo -n " 📶 "
     fi
   else
-    echo -n " ❌ "
+    echo -n " ❗️📶 "
   fi
 }
 

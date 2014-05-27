@@ -20,7 +20,7 @@ load test_helper
   stub "scutil"
   run $tmux_status_bar -n
 
-  [ $output = " ❌ " ]
+  [ $output = " ❗️📶 " ]
   [ $status -eq 0 ]
 }
 
@@ -28,6 +28,6 @@ load test_helper
   stub "scutil"
   run $tmux_status_bar -q -n
 
-  [ $output = " ❌ " ]
+  [ $output = " ❗️📶 " ]
   [ $status -eq 0 ]
 }
