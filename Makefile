@@ -7,11 +7,15 @@ TAG=v$(VERSION)
 ARCHIVE=tmux-status-bar-$(TAG).tar.gz
 ARCHIVE_URL=$(HOMEPAGE)/archive/$(TAG).tar.gz
 FILES=`find bin -type file`
+SHELLS=bash dash ksh sh zsh
 
 export PATH := bin:$(PATH)
 
-test:
+test: lint
 	bats test
+
+lint:
+	for shell in $(SHELLS); do echo Linting $$shell...; for file in $(FILES); do $$shell -n $$file; if [ $$? != 0 ]; then exit 1; fi; done; done
 
 release: tag sha
 
@@ -37,4 +41,4 @@ install:
 uninstall:
 	for file in $(FILES); do rm -vf $(PREFIX)/$$file; done
 
-.PHONY: test release tag sha install uninstall
+.PHONY: test lint release tag sha install uninstall

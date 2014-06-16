@@ -1,29 +1,31 @@
-#!/bin/bash
+#!/usr/bin/env sh
+
+set -e
 
 network() {
-  if scutil -r 8.8.8.8 | grep "^Reachable$" > /dev/null; then
-    if [[ $quiet -eq 0 ]]; then
-      echo -n " 📶 "
+  if scutil -r 8.8.8.8 | grep "^Reachable" > /dev/null; then
+    if [ $quiet -eq 0 ]; then
+      printf " 📶 "
     fi
   else
-    echo -n " ❗️📶 "
+    printf " ❗️📶 "
   fi
 }
 
 power() {
-  remaining=`pmset -g batt | grep "discharging" | cut -f 4 -d " "`
+  local remaining=$(pmset -g batt | grep "discharging" | cut -f 4 -d " ")
 
-  if [[ $remaining == "" ]]; then
-    if [[ $quiet -eq 0 ]]; then
-      echo -n " 🔌 "
+  if [[ -z $remaining ]]; then
+    if [ $quiet -eq 0 ]; then
+      printf " 🔌 "
     fi
   else
     if [[ $remaining == "(no" ]]; then remaining="?:??"; fi
 
     if [[ $remaining =~ ^0: ]]; then
-      echo -n " ~$remaining ❗️🔋 "
+      printf " ~$remaining ❗️🔋 "
     else
-      echo -n " ~$remaining 🔋 "
+      printf " ~$remaining 🔋 "
     fi
   fi
 }
