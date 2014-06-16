@@ -1,5 +1,6 @@
 setup() {
   TSB_TMPDIR=$BATS_TMPDIR/tsb
+  TSB_FIXTURES=$PWD/test/fixtures
   TSB_STUBS=$TSB_TMPDIR/stubs
   PATH=$TSB_STUBS:$PATH
 
@@ -21,4 +22,9 @@ stub() {
   echo "#!/bin/bash" > $stub
   echo "$2" >> $stub
   chmod +x $stub
+}
+
+fixture() {
+  stub $1 "cat $TSB_STUBS/$2"
+  cp -v $TSB_FIXTURES/$2 $TSB_STUBS/
 }

@@ -1,7 +1,7 @@
 load test_helper
 
 @test "power displays a power plug when plugged-in" {
-  stub "pmset"
+  fixture "pmset" "pmset-charged"
   run $tmux_status_bar -p
 
   [ $output = " 🔌 " ]
@@ -9,7 +9,7 @@ load test_helper
 }
 
 @test "power is quiet when plugged-in" {
-  stub "pmset"
+  fixture "pmset" "pmset-charged"
   run $tmux_status_bar -q -p
 
   [ -z $output ]
@@ -17,23 +17,23 @@ load test_helper
 }
 
 @test "power displays a battery and time remaining while discharging" {
-  stub "pmset" "echo '-InternalBattery-0 99%; discharging; 9:41 remaining'"
+  fixture "pmset" "pmset-discharging-with-estimate"
   run $tmux_status_bar -p
 
-  [ $output = " ~9:41 🔋 " ]
+  [ $output = " ~1:23 🔋 " ]
   [ $status -eq 0 ]
 }
 
 @test "power is not quiet while discharging" {
-  stub "pmset" "echo '-InternalBattery-0 99%; discharging; 9:41 remaining'"
+  fixture "pmset" "pmset-discharging-with-estimate"
   run $tmux_status_bar -q -p
 
-  [ $output = " ~9:41 🔋 " ]
+  [ $output = " ~1:23 🔋 " ]
   [ $status -eq 0 ]
 }
 
 @test "power displays a battery and question marks while still calculating" {
-  stub "pmset" "echo '-InternalBattery-0 99%; discharging; (no'"
+  fixture "pmset" "pmset-discharging"
   run $tmux_status_bar -p
 
   [ $output = " ~?:?? 🔋 " ]
@@ -41,9 +41,9 @@ load test_helper
 }
 
 @test "power displays a red exclamation point with less than an hour left" {
-  stub "pmset" "echo '-InternalBattery-0 20%; discharging; 0:59 remaining'"
+  fixture "pmset" "pmset-low"
   run $tmux_status_bar -p
 
-  [ $output = " ~0:59 ❗️🔋 " ]
+  [ $output = " ~0:12 ❗️🔋 " ]
   [ $status -eq 0 ]
 }
