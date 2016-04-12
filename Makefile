@@ -1,30 +1,38 @@
-HOMEPAGE=https://github.com/justincampbell/tmux-status-bar
-PREFIX=/usr/local
+NAME := tmux-status-bar
+VERSION := v1.0.0
 
-VERSION=1.0.0
-TAG=v$(VERSION)
+MAIN := main.swift
+FILES := $(shell exec find bin -type file)
+PREFIX := /usr/local
 
-ARCHIVE=tmux-status-bar-$(TAG).tar.gz
-ARCHIVE_URL=$(HOMEPAGE)/archive/$(TAG).tar.gz
-FILES=`find bin -type file`
+SWIFT_OPTS := -import-objc-header bridge.h
 
-export PATH := bin:$(PATH)
+all: build test
+
+build: bin/
+	swiftc -o bin/$(NAME) $(SWIFT_OPTS) $(MAIN)
+
+run:
+	swift $(SWIFT_OPTS) $(MAIN) -p -n
 
 test:
-	TODO
+	@echo "#TODO"
 
-release: tag sha
-
-tag:
-	git tag | grep $(TAG) || git tag --message "Release $(TAG)" --sign $(TAG)
+release: tag
 	git push origin
 	git push origin --tags
 
+tag:
+	git tag --message "Release $(VERSION)" --sign $(VERSION)
+
 install:
-	mkdir -p $(PREFIX)/bin
+	mkdir -p $(BIN)/bin
 	for file in $(FILES); do cp -v $$file $(PREFIX)/$$file; done
 
 uninstall:
 	for file in $(FILES); do rm -vf $(PREFIX)/$$file; done
 
-.PHONY: test release tag sha install uninstall
+bin/:
+	mkdir -p $@
+
+.PHONY: all build run test release tag install uninstall
