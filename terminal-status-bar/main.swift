@@ -1,12 +1,8 @@
-//
-//  main.swift
-//  terminal-status-bar
-//
-//  Created by Justin Campbell on 4/23/16.
-//  Copyright © 2016 Justin Campbell. All rights reserved.
-//
-
 import Foundation
 
-print("Hello, World!")
+guard let battery = batteries().first else {
+    print("Failed to identify power sources")
+    exit(-1)
+}
 
+print(battery)
